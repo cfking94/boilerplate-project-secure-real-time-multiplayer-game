@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const expect = require('chai');
+const cors = require("cors");
 const socket = require('socket.io');
 const helmet = require('helmet');
 
@@ -14,12 +15,14 @@ app.use(
   helmet({
     noSniff: true,
     xssFilter: true,
-    nocache: true,
+    noCache: true,
     hidePoweredBy: {
       setTo: "PHP 7.4.3",
     },
   })
 );
+
+app.use(cors({ origin: "*" })); //For FCC testing purposes only
 
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/assets', express.static(process.cwd() + '/assets'));
